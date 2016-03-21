@@ -1,0 +1,149 @@
+@import 'normalize';
+@import 'variables';
+@import 'mixins';
+
+html {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    min-height: 100%;
+    padding: 0;
+
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: $body;
+    font-weight: 400;
+
+    fontKerning();
+    fontSmoothing();
+}
+
+h1 {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    color: $black;
+}
+
+h2 {
+    margin: 0 0 15px;
+
+    font-family: $poster;
+    font-size: 31px;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    font-weight: 900;
+}
+
+a {
+    text-decoration: none;
+    color: $link;
+
+    upperCase();
+
+    &:hover {
+        color: $link-h;
+    }
+}
+
+p {
+    margin: 15px 0;
+}
+
+.Background {
+    height: 75vh;
+    background: url('/assets/img/sara-tengvall.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.Main {
+    padding: 25px;
+
+    color: $primary;
+    background: $white;
+}
+
+.Main__content {
+    padding: 15px 0;
+}
+
+footer {
+    font-size: 12px;
+    letter-spacing: 2px;
+
+    a {
+        display: block;
+        padding: 2px;
+
+        &:before {
+            content: '/ ';
+        }
+    }
+}
+
+@media (min-width: 640px) {
+
+    body {
+        display: flex;
+
+        font-size: 20px;
+    }
+
+    h2 {
+        margin: 0 0 40px;
+
+        font-size: 52px;
+    }
+
+    p {
+        margin: 40px 0;
+        font-weight: 300;
+    }
+
+    .Background {
+        width: 50%;
+        height: auto;
+    }
+
+    .Main {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        padding: 0;
+    }
+
+    .Main__header {
+        position: absolute;
+        top: 22px;
+        left: 25px;
+    }
+
+    .Main__content {
+        display: flex;
+        align-items: center;
+
+        padding: 50px;
+        max-width: 600px;
+        min-width: 360px;
+    }
+
+    footer {
+        a {
+            display: inline-block;
+            padding: 0;
+
+            margin-right: 25px;
+        }
+    }
+
+}

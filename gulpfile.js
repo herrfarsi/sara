@@ -6,11 +6,11 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var plumber = require('gulp-plumber');
-var inlinesource = require('gulp-inline-source');
 var cssmin = require('gulp-cssmin');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var mqpacker = require('css-mqpacker');
+var imagemin = require('gulp-imagemin');
 
 var babel = require('gulp-babel');
 var reload = browserSync.reload;
@@ -29,7 +29,7 @@ gulp.task('stylus', function () {
         ]))
         .pipe(rename({ suffix: '.min' }))
         .pipe(cssmin())
-        .pipe(gulp.dest('./assets/css'))
+        .pipe(gulp.dest('./dist/css'))
         .pipe(reload({stream: true}));
 });
 
@@ -45,7 +45,7 @@ gulp.task('javascript', function () {
         .pipe(concat('scripts.js'))
         .pipe(rename({ suffix: '.min' }))
         .pipe(uglify())
-        .pipe(gulp.dest('./assets/js'))
+        .pipe(gulp.dest('./dist/js'))
         .pipe(reload({stream: true}));
 });
 
@@ -56,30 +56,30 @@ gulp.task('html', function () {
 
     return gulp.src('./src/**/*.html')
         .pipe(plumber())
-        .pipe(inlinesource(options))
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('./dist'))
         .pipe(reload({stream: true}));
+});
+
+gulp.task('images', function () {
+    return gulp.src('src/img/**/*')
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}]
+        }))
+        .pipe(gulp.dest('./dist/img'));
 });
 
 // Default
 gulp.task('default', function () {
 
     browserSync({
-        server: "./",
+        server: "./dist",
         notify: false,
         ghostmode: false,
     });
 
     gulp.watch('src/**/*.html', ['html']);
     gulp.watch('src/styl/**/*.styl', ['stylus']);
+    gulp.watch('src/img/**/*', ['images']);
     gulp.watch('src/js/*.js', ['javascript']);
-});
-
-gulp.task('build', function () {
-    var options = {
-        compress: false
-    };
-    return gulp.src('src/**/*.html')
-        .pipe(inlinesource(options))
-        .pipe(gulp.dest('./'));
 });
